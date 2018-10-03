@@ -8,6 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		342D4B6A21470AE800BD0F98 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 342D4B6921470AE800BD0F98 /* main.cpp */; };
+		342D4B7221470B7F00BD0F98 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 342D4B7121470B7F00BD0F98 /* OpenGL.framework */; };
+		342D4B7821470F7800BD0F98 /* libGLEW.2.1.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 342D4B7721470F7800BD0F98 /* libGLEW.2.1.0.dylib */; };
+		342D4B7B2147194800BD0F98 /* Window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 342D4B792147194800BD0F98 /* Window.cpp */; };
+		342D4B812147720F00BD0F98 /* libglfw.3.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 342D4B802147720F00BD0F98 /* libglfw.3.3.dylib */; };
+		343F68332147FA2100BCB4BC /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 343F68312147FA2100BCB4BC /* Mesh.cpp */; };
+		343F68372148227000BCB4BC /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 343F68352148227000BCB4BC /* Shader.cpp */; };
+		343F683A2148995B00BCB4BC /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 343F68392148995B00BCB4BC /* OpenCL.framework */; };
+		343F683D2149496100BCB4BC /* VAO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 343F683B2149496100BCB4BC /* VAO.cpp */; };
+		343F68402149AAFB00BCB4BC /* Entity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 343F683E2149AAFB00BCB4BC /* Entity.cpp */; };
+		343F6843214AAA7500BCB4BC /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 343F6841214AAA7500BCB4BC /* Camera.cpp */; };
+		34F53EE2214B053200BBBA48 /* MarchingCubes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 34F53EE0214B053200BBBA48 /* MarchingCubes.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +36,26 @@
 /* Begin PBXFileReference section */
 		342D4B6621470AE800BD0F98 /* Project Radon */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Project Radon"; sourceTree = BUILT_PRODUCTS_DIR; };
 		342D4B6921470AE800BD0F98 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		342D4B7121470B7F00BD0F98 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		342D4B7721470F7800BD0F98 /* libGLEW.2.1.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGLEW.2.1.0.dylib; path = ../../../../usr/local/Cellar/glew/2.1.0/lib/libGLEW.2.1.0.dylib; sourceTree = "<group>"; };
+		342D4B792147194800BD0F98 /* Window.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Window.cpp; sourceTree = "<group>"; };
+		342D4B7A2147194800BD0F98 /* Window.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Window.hpp; sourceTree = "<group>"; };
+		342D4B802147720F00BD0F98 /* libglfw.3.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libglfw.3.3.dylib; path = ../../../../usr/local/lib/libglfw.3.3.dylib; sourceTree = "<group>"; };
+		343F68312147FA2100BCB4BC /* Mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		343F68322147FA2100BCB4BC /* Mesh.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Mesh.hpp; sourceTree = "<group>"; };
+		343F68342148099700BCB4BC /* vertShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = vertShader.glsl; sourceTree = "<group>"; };
+		343F68352148227000BCB4BC /* Shader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
+		343F68362148227000BCB4BC /* Shader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
+		343F68382148595200BCB4BC /* fragmentShader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; path = fragmentShader.glsl; sourceTree = "<group>"; };
+		343F68392148995B00BCB4BC /* OpenCL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenCL.framework; path = System/Library/Frameworks/OpenCL.framework; sourceTree = SDKROOT; };
+		343F683B2149496100BCB4BC /* VAO.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VAO.cpp; sourceTree = "<group>"; };
+		343F683C2149496100BCB4BC /* VAO.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VAO.hpp; sourceTree = "<group>"; };
+		343F683E2149AAFB00BCB4BC /* Entity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Entity.cpp; sourceTree = "<group>"; };
+		343F683F2149AAFB00BCB4BC /* Entity.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Entity.hpp; sourceTree = "<group>"; };
+		343F6841214AAA7500BCB4BC /* Camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
+		343F6842214AAA7500BCB4BC /* Camera.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
+		34F53EE0214B053200BBBA48 /* MarchingCubes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MarchingCubes.cpp; sourceTree = "<group>"; };
+		34F53EE1214B053200BBBA48 /* MarchingCubes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MarchingCubes.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +63,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				343F683A2148995B00BCB4BC /* OpenCL.framework in Frameworks */,
+				342D4B812147720F00BD0F98 /* libglfw.3.3.dylib in Frameworks */,
+				342D4B7821470F7800BD0F98 /* libGLEW.2.1.0.dylib in Frameworks */,
+				342D4B7221470B7F00BD0F98 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -43,6 +78,7 @@
 			children = (
 				342D4B6821470AE800BD0F98 /* Project Radon */,
 				342D4B6721470AE800BD0F98 /* Products */,
+				342D4B7021470B7E00BD0F98 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,8 +94,35 @@
 			isa = PBXGroup;
 			children = (
 				342D4B6921470AE800BD0F98 /* main.cpp */,
+				342D4B792147194800BD0F98 /* Window.cpp */,
+				342D4B7A2147194800BD0F98 /* Window.hpp */,
+				343F68312147FA2100BCB4BC /* Mesh.cpp */,
+				343F68322147FA2100BCB4BC /* Mesh.hpp */,
+				343F68342148099700BCB4BC /* vertShader.glsl */,
+				343F68352148227000BCB4BC /* Shader.cpp */,
+				343F68362148227000BCB4BC /* Shader.hpp */,
+				343F68382148595200BCB4BC /* fragmentShader.glsl */,
+				343F683B2149496100BCB4BC /* VAO.cpp */,
+				343F683C2149496100BCB4BC /* VAO.hpp */,
+				343F683E2149AAFB00BCB4BC /* Entity.cpp */,
+				343F683F2149AAFB00BCB4BC /* Entity.hpp */,
+				343F6841214AAA7500BCB4BC /* Camera.cpp */,
+				343F6842214AAA7500BCB4BC /* Camera.hpp */,
+				34F53EE0214B053200BBBA48 /* MarchingCubes.cpp */,
+				34F53EE1214B053200BBBA48 /* MarchingCubes.hpp */,
 			);
 			path = "Project Radon";
+			sourceTree = "<group>";
+		};
+		342D4B7021470B7E00BD0F98 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				343F68392148995B00BCB4BC /* OpenCL.framework */,
+				342D4B802147720F00BD0F98 /* libglfw.3.3.dylib */,
+				342D4B7721470F7800BD0F98 /* libGLEW.2.1.0.dylib */,
+				342D4B7121470B7F00BD0F98 /* OpenGL.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,7 +181,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				343F68332147FA2100BCB4BC /* Mesh.cpp in Sources */,
 				342D4B6A21470AE800BD0F98 /* main.cpp in Sources */,
+				343F6843214AAA7500BCB4BC /* Camera.cpp in Sources */,
+				343F683D2149496100BCB4BC /* VAO.cpp in Sources */,
+				343F68372148227000BCB4BC /* Shader.cpp in Sources */,
+				34F53EE2214B053200BBBA48 /* MarchingCubes.cpp in Sources */,
+				343F68402149AAFB00BCB4BC /* Entity.cpp in Sources */,
+				342D4B7B2147194800BD0F98 /* Window.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +308,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9R6ZN99T7H;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/Cellar/glew/2.1.0/include/GL,
+					/usr/local/include/GLFW,
+					/usr/local/Cellar/glm/0.9.9.1/include/glm,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/Cellar/glew/2.1.0/lib,
+					"$(inherited)",
+					/usr/local/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -246,6 +327,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9R6ZN99T7H;
+				HEADER_SEARCH_PATHS = (
+					/usr/local/Cellar/glew/2.1.0/include/GL,
+					/usr/local/include/GLFW,
+					/usr/local/Cellar/glm/0.9.9.1/include/glm,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/Cellar/glew/2.1.0/lib,
+					"$(inherited)",
+					/usr/local/lib,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
