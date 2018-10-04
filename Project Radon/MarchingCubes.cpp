@@ -12,10 +12,15 @@
 #include <boost/thread.hpp>
 #include <ctpl.h>
 #include <FastNoiseSIMD.h>
+#include <OpenCL/cl.h>
 
-MarchingCubes :: MarchingCubes(int chunkSizeX, int chunkSizeY, int chunkSizeZ, float gridSize, float isoValue, int numThreads, glm::vec3 pos)
-: ChunkSizeX(chunkSizeX), ChunkSizeY(chunkSizeY), ChunkSizeZ(chunkSizeZ), GridSize(gridSize), IsoValue(isoValue), pos(pos){
-    
+
+MarchingCubes::MarchingCubes(int chunkSizeX, int chunkSizeY, int chunkSizeZ, float gridSize, float isoValue,
+                             int numThreads, glm::vec3 pos, CLKernel Kernel)
+        : ChunkSizeX(chunkSizeX), ChunkSizeY(chunkSizeY), ChunkSizeZ(chunkSizeZ), GridSize(gridSize),
+          IsoValue(isoValue), pos(pos), kernel(Kernel) {
+
+    //cl_command_queue queue = clCreateCommandQueue(kernel.context, );
 
     FastNoiseSIMD* myNoise = FastNoiseSIMD::NewFastNoiseSIMD();
     myNoise->SetFrequency(0.004f);

@@ -16,6 +16,15 @@ public:
 
     cl_context context;
     cl_program program;
+    cl_platform_id platform_id = NULL;
+    cl_device_id device_id = NULL;
+    cl_uint ret_num_devices;
+    cl_uint ret_num_platforms;
+
+
+    cl_kernel kernel;
+
+
 private:
 
 

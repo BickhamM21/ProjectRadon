@@ -47,8 +47,9 @@ int main(int argc, const char * argv[]) {
     //Create the camera object
     Camera c;
 
+    CLKernel CLK("SimplexNoise.cl");
 
-    MarchingCubes *m = new MarchingCubes(32, 32, 32, 1.0f, 0.0f, 8, glm::vec3(-0, -0, -0));
+    MarchingCubes *m = new MarchingCubes(32, 32, 32, 1.0f, 0.0f, 8, glm::vec3(-0, -0, -0), CLK);
 
 
     VAO vao;
@@ -87,7 +88,6 @@ int main(int argc, const char * argv[]) {
     //main game loop
 
 
-    CLKernel CLK("SimplexNoise.cl");
 
     while(!glfwWindowShouldClose(window.GetWindow())) {
         float firsttime = glfwGetTime();

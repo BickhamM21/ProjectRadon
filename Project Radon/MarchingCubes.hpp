@@ -15,6 +15,8 @@
 #include <thread>
 #include <ctpl.h>
 
+#include "CLKernel.h"
+
 struct MCData{
     int ChunkSizeX, ChunkSizeY, ChunkSizeZ, threadID, numThreads;
     float gridSize, isoValue;
@@ -45,8 +47,9 @@ public:
     float GridSize;
     float IsoValue;
 
-    
-    MarchingCubes(int chunkSizeX, int chunkSize, int chunkSizeZ, float gridSize, float isoValue, int numThreads, glm::vec3 pos);
+
+    MarchingCubes(int chunkSizeX, int chunkSize, int chunkSizeZ, float gridSize, float isoValue, int numThreads,
+                  glm::vec3 pos, CLKernel Kernel);
     std::vector<glm::vec3> vertices;
     std::vector<int> indices;
     std::vector<glm::vec3> normals;
@@ -70,6 +73,9 @@ public:
     glm::vec3 pos;
 
     ctpl::thread_pool* tp = new ctpl::thread_pool(4);
+
+
+    CLKernel kernel;
 
 private:
     
