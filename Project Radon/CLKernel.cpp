@@ -43,6 +43,7 @@ CLKernel::CLKernel(std::string FilePath) {
     program = clCreateProgramWithSource(context, 1, (const char **) &source_str, (const size_t *) &source_size, &error);
     error = clBuildProgram(program, 1, &device_id, NULL, NULL, NULL);
 
+    kernel = clCreateKernel(program, "SimplexNoise", &error);
 
     std::cout << error << std::endl;
 

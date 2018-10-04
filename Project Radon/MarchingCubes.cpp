@@ -19,8 +19,44 @@ MarchingCubes::MarchingCubes(int chunkSizeX, int chunkSizeY, int chunkSizeZ, flo
                              int numThreads, glm::vec3 pos, CLKernel Kernel)
         : ChunkSizeX(chunkSizeX), ChunkSizeY(chunkSizeY), ChunkSizeZ(chunkSizeZ), GridSize(gridSize),
           IsoValue(isoValue), pos(pos), kernel(Kernel) {
+    int error;
 
-    //cl_command_queue queue = clCreateCommandQueue(kernel.context, );
+
+    float settings[4];
+    settings[0] = chunkSizeX;
+    settings[1] = chunkSizeY;
+    settings[2] = chunkSizeZ;
+    settings[3] = gridSize;
+
+
+    int SIZE = (ChunkSizeX + 1) * (ChunkSizeY + 1) * (ChunkSizeZ + 1);
+
+    cl_command_queue queue = clCreateCommandQueue(kernel.context, kernel.device_id, 0, &error);
+
+
+    cl_mem voxels_mem_obj = clCreateBuffer(kernel.context, CL_MEM_READ_WRITE, SIZE * sizeof(float), NULL, &error);
+    cl_mem settings_mem_obj = clCreateBuffer(kernel.context, CL_MEM_READ_ONLY, 4 * sizeof(float), NULL, &error);
+
+    error = clEnqueueWriteBuffer(queue, settings_mem_obj, CL_TRUE, 0, 4 * sizeof(float), settings, 0, NULL, NULL);
+
+    error = clSetKernelArg(kernel.kernel, 0, sizeof(cl_mem), (void *) &voxels_mem_obj);
+    error = clSetKernelArg(kernel.kernel, 1, sizeof(cl_mem), (void *) &settings_mem_obj);
+
+    size_t global_item_size = 1;
+    size_t local_item_size = 1;
+
+    error = clEnqueueNDRangeKernel(queue, kernel.kernel, 3, NULL, &global_item_size, &local_item_size, 0, NULL, NULL);
+
+
+    float *C = (float *) malloc(sizeof(float) * SIZE);
+
+    error = clEnqueueReadBuffer(queue, voxels_mem_obj, CL_TRUE, 0, SIZE * sizeof(float), C, 0, NULL, NULL);
+
+
+    for (int i = 0; i < SIZE; i++) {
+        std::cout << C[i] << std::endl;
+
+    }
 
     FastNoiseSIMD* myNoise = FastNoiseSIMD::NewFastNoiseSIMD();
     myNoise->SetFrequency(0.004f);
