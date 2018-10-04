@@ -1,7 +1,7 @@
 # ProjectRadon
 A Voxel Game Engine that will hopefully one day turn into an actual game, called Radon.
 
-However, we are far, far, far from being finished. So, here are a few things that we should work on that are HIGHL Important:
+However, we are far, far, far from being finished. So, here are a few things that we should work on that are HIGHLY Important:
 
 - Offloading noise generation and planet generation to the GPU using OpenCL (For huge speedups) 
 - Making our already pretty fast rendering system even faster by using DOD (Data Oriented Design)
