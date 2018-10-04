@@ -18,7 +18,7 @@ MarchingCubes :: MarchingCubes(int chunkSizeX, int chunkSizeY, int chunkSizeZ, f
     
 
     FastNoiseSIMD* myNoise = FastNoiseSIMD::NewFastNoiseSIMD();
-    myNoise->SetFrequency(0.005f);
+    myNoise->SetFrequency(0.006f);
     myNoise->SetFractalOctaves(8);
     myNoise->SetAxisScales(GridSize * 2,GridSize * 2,GridSize * 2);
     float onetime = glfwGetTime();
@@ -229,18 +229,23 @@ float MarchingCubes::Circle(glm::vec3 pos) {
 }
 
 glm::vec3 MarchingCubes::NormalCalc(glm::vec3 pos) {
-    const float H = 1;
+    const float H = .001;
 
-    int x1 = round(pos.x);
-    int y1 = round(pos.y);
-    int z1 = round(pos.z);
+    int x1 = floor(pos.x);
+    int y1 = floor(pos.y);
+    int z1 = floor(pos.z);
+
+    const float v = voxels[x1 + y1 * (ChunkSizeX + 1) + z1 * (ChunkSizeX + 1) * (ChunkSizeY + 1)];
+    const float dxn = v - voxels[(x1 + 1) + y1 * (ChunkSizeX + 1) + z1 * (ChunkSizeX + 1) * (ChunkSizeY + 1)];
+    const float dyn = v - voxels[(x1) + (y1 + 1) * (ChunkSizeX + 1) + z1 * (ChunkSizeX + 1) * (ChunkSizeY + 1)];
+    const float dzn = v - voxels[(x1) + (y1) * (ChunkSizeX + 1) + (z1 + 1) * (ChunkSizeX + 1) * (ChunkSizeY + 1)];
 
     //voxels[(z1 * (ChunkSizeX + 1) * (ChunkSizeY + 1)) + (y1 * (ChunkSizeX + 1)) + x1];
 
     const float dx = (Circle(pos + glm::vec3(H,0,0))) - Circle(pos - glm::vec3(H,0,0));
     const float dy = Circle(pos + glm::vec3(0,H,0)) - Circle(pos - glm::vec3(0,H,0));
     const float dz = Circle(pos + glm::vec3(0,0,H)) - Circle(pos - glm::vec3(0,0,H));
-    return glm::normalize(glm::vec3(dx,dy,dz));
+    return glm::normalize(glm::vec3(dx + 0,dy + 0,dz + 0));
 }
 
 float MarchingCubes::smin(float a, float b, float k) {

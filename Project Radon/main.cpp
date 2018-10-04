@@ -49,7 +49,7 @@ int main(int argc, const char * argv[]) {
 
 
 
-    MarchingCubes *m = new MarchingCubes(512,512,512,1,0.0f,8, glm::vec3(-256,-256,-256));
+    MarchingCubes *m = new MarchingCubes(64,64,64,0.25f,0.0f,8, glm::vec3(0,0,0));
 
 
     VAO vao;
@@ -66,7 +66,7 @@ int main(int argc, const char * argv[]) {
 
     //mesh.InitVAO();
 
-    glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+    //glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 
     glfwSwapInterval(1);
 
