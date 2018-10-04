@@ -6,7 +6,9 @@
 #include <OpenCL/cl.h>
 #include <vector>
 #include <iostream>
-CLKernel::CLKernel() {
+#include <string>
+
+CLKernel::CLKernel(std::string FilePath) {
 
     cl_uint platformIdCount = 0;
     clGetPlatformIDs(0, nullptr, &platformIdCount);

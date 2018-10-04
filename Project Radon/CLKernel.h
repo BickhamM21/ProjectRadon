@@ -5,16 +5,16 @@
 #ifndef PROJECT_RADON_CLKERNEL_H
 #define PROJECT_RADON_CLKERNEL_H
 
-
+#include <string>
 class CLKernel {
 
 
 public:
 
-    CLKernel();
+    CLKernel(std::string FilePath);
 
 
-
+    
 private:
 
 

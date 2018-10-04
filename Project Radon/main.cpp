@@ -48,7 +48,7 @@ int main(int argc, const char * argv[]) {
     Camera c;
 
 
-    MarchingCubes *m = new MarchingCubes(32, 32, 32, 1.0f, 0.0f, 8, glm::vec3(0, 0, 0));
+    MarchingCubes *m = new MarchingCubes(1024, 1024, 1024, 1.0f, 0.0f, 8, glm::vec3(-512, -512, -512));
 
 
     VAO vao;
@@ -107,16 +107,16 @@ int main(int argc, const char * argv[]) {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear the screen for a new drawing
         //m->pos = glm::vec3(glfwGetTime(),0,0);
-        m->UpdateMesh(); //update things like the shader attached to the mesh, also, draw the mesh
+        //m->UpdateMesh(); //update things like the shader attached to the mesh, also, draw the mesh
 
 
 
 
-        mesh.SetVBOData(&m->vertices[0], GL_DYNAMIC_DRAW,
-                        m->vertices.size() * sizeof(glm::vec3)); //set the vertices data
+        /*mesh.SetVBOData(&m->vertices[0], GL_DYNAMIC_DRAW,
+                        m->vertices.size() * sizeof(glm::vec3));
         mesh.SetNormalVBOData(&m->normals[0], GL_DYNAMIC_DRAW,
-                              m->normals.size() * sizeof(glm::vec3)); //set the normals data
-        mesh.SetEBOData(&m->indices[0], GL_DYNAMIC_DRAW, m->indices.size() * sizeof(int)); //set the indices data
+                              m->normals.size() * sizeof(glm::vec3));
+        mesh.SetEBOData(&m->indices[0], GL_DYNAMIC_DRAW, m->indices.size() * sizeof(int)); *///set the indices data
 
 
         if(m->vertices.size() != 0) {

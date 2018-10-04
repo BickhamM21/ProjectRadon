@@ -18,8 +18,8 @@ MarchingCubes :: MarchingCubes(int chunkSizeX, int chunkSizeY, int chunkSizeZ, f
     
 
     FastNoiseSIMD* myNoise = FastNoiseSIMD::NewFastNoiseSIMD();
-    myNoise->SetFrequency(0.006f);
-    myNoise->SetFractalOctaves(8);
+    myNoise->SetFrequency(0.004f);
+    myNoise->SetFractalOctaves(6);
     myNoise->SetAxisScales(GridSize * 2,GridSize * 2,GridSize * 2);
     float onetime = glfwGetTime();
     voxels = myNoise->GetSimplexFractalSet(pos.x,pos.y,pos.z,ChunkSizeX + 1,ChunkSizeY + 1,ChunkSizeZ + 1);
