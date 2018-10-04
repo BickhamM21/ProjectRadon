@@ -6,6 +6,7 @@
 #define PROJECT_RADON_CLKERNEL_H
 
 #include <string>
+#include <OpenCL/cl.h>
 class CLKernel {
 
 
@@ -13,8 +14,8 @@ public:
 
     CLKernel(std::string FilePath);
 
-
-    
+    cl_context context;
+    cl_program program;
 private:
 
 
