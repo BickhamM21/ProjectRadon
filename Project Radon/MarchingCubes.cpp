@@ -24,11 +24,15 @@ MarchingCubes::MarchingCubes(int chunkSizeX, int chunkSizeY, int chunkSizeZ, flo
     int error;
 
 
-    float settings[4];
+    float settings[7];
     settings[0] = chunkSizeX;
     settings[1] = chunkSizeY;
     settings[2] = chunkSizeZ;
     settings[3] = gridSize;
+    settings[4] = pos.x;
+    settings[5] = pos.y;
+    settings[6] = pos.z;
+
 
 
     const int SIZE = (ChunkSizeX + 1) * (ChunkSizeY + 1) * (ChunkSizeZ + 1);
@@ -37,9 +41,9 @@ MarchingCubes::MarchingCubes(int chunkSizeX, int chunkSizeY, int chunkSizeZ, flo
 
 
     cl_mem voxels_mem_obj = clCreateBuffer(kernel.context, CL_MEM_READ_WRITE, SIZE * sizeof(float), NULL, &error);
-    cl_mem settings_mem_obj = clCreateBuffer(kernel.context, CL_MEM_READ_ONLY, 4 * sizeof(float), NULL, &error);
+    cl_mem settings_mem_obj = clCreateBuffer(kernel.context, CL_MEM_READ_ONLY, 7 * sizeof(float), NULL, &error);
 
-    error = clEnqueueWriteBuffer(queue, settings_mem_obj, CL_TRUE, 0, 4 * sizeof(float), settings, 0, NULL, NULL);
+    error = clEnqueueWriteBuffer(queue, settings_mem_obj, CL_TRUE, 0, 7 * sizeof(float), settings, 0, NULL, NULL);
 
     error = clSetKernelArg(kernel.kernel, 0, sizeof(cl_mem), (void *) &voxels_mem_obj);
     error = clSetKernelArg(kernel.kernel, 1, sizeof(cl_mem), (void *) &settings_mem_obj);

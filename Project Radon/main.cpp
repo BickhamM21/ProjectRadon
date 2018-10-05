@@ -49,7 +49,7 @@ int main(int argc, const char * argv[]) {
 
     CLKernel CLK("SimplexNoise.cl");
 
-    MarchingCubes *m = new MarchingCubes(16, 16, 16, 1, 0.0f, 8, glm::vec3(0, 0, 0), CLK);
+    MarchingCubes *m = new MarchingCubes(64, 64, 64, 1, 0.0f, 8, glm::vec3(0, 0, 0), CLK);
 
 
     VAO vao;
