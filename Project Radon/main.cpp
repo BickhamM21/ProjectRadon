@@ -49,7 +49,7 @@ int main(int argc, const char * argv[]) {
 
     CLKernel CLK("SimplexNoise.cl");
 
-    MarchingCubes *m = new MarchingCubes(32, 32, 32, 1.0f, 0.0f, 8, glm::vec3(-0, -0, -0), CLK);
+    MarchingCubes *m = new MarchingCubes(16, 16, 16, 1, 0.0f, 8, glm::vec3(0, 0, 0), CLK);
 
 
     VAO vao;
@@ -130,7 +130,7 @@ int main(int argc, const char * argv[]) {
 
         float secondtime = glfwGetTime();
 
-        std::cout << 1000 * (secondtime - firsttime) << std::endl;
+        //std::cout << 1000 * (secondtime - firsttime) << std::endl;
     }
 
     glfwDestroyWindow(window.GetWindow()); //Destroy the Window since the application was closed

@@ -19,6 +19,8 @@ MarchingCubes::MarchingCubes(int chunkSizeX, int chunkSizeY, int chunkSizeZ, flo
                              int numThreads, glm::vec3 pos, CLKernel Kernel)
         : ChunkSizeX(chunkSizeX), ChunkSizeY(chunkSizeY), ChunkSizeZ(chunkSizeZ), GridSize(gridSize),
           IsoValue(isoValue), pos(pos), kernel(Kernel) {
+    float onetime = glfwGetTime();
+
     int error;
 
 
@@ -29,7 +31,7 @@ MarchingCubes::MarchingCubes(int chunkSizeX, int chunkSizeY, int chunkSizeZ, flo
     settings[3] = gridSize;
 
 
-    int SIZE = (ChunkSizeX + 1) * (ChunkSizeY + 1) * (ChunkSizeZ + 1);
+    const int SIZE = (ChunkSizeX + 1) * (ChunkSizeY + 1) * (ChunkSizeZ + 1);
 
     cl_command_queue queue = clCreateCommandQueue(kernel.context, kernel.device_id, 0, &error);
 
@@ -42,33 +44,34 @@ MarchingCubes::MarchingCubes(int chunkSizeX, int chunkSizeY, int chunkSizeZ, flo
     error = clSetKernelArg(kernel.kernel, 0, sizeof(cl_mem), (void *) &voxels_mem_obj);
     error = clSetKernelArg(kernel.kernel, 1, sizeof(cl_mem), (void *) &settings_mem_obj);
 
-    size_t global_item_size = 1;
-    size_t local_item_size = 1;
-
-    error = clEnqueueNDRangeKernel(queue, kernel.kernel, 3, NULL, &global_item_size, &local_item_size, 0, NULL, NULL);
-
-
-    float *C = (float *) malloc(sizeof(float) * SIZE);
-
-    error = clEnqueueReadBuffer(queue, voxels_mem_obj, CL_TRUE, 0, SIZE * sizeof(float), C, 0, NULL, NULL);
+    size_t global_item_sizes[3];
+    global_item_sizes[0] = ChunkSizeX + 1;
+    global_item_sizes[1] = ChunkSizeY + 1;
+    global_item_sizes[2] = ChunkSizeZ + 1;
 
 
-    for (int i = 0; i < SIZE; i++) {
-        std::cout << C[i] << std::endl;
 
-    }
 
-    FastNoiseSIMD* myNoise = FastNoiseSIMD::NewFastNoiseSIMD();
-    myNoise->SetFrequency(0.004f);
-    myNoise->SetFractalOctaves(6);
-    myNoise->SetAxisScales(GridSize * 2,GridSize * 2,GridSize * 2);
-    float onetime = glfwGetTime();
-    voxels = myNoise->GetSimplexFractalSet(pos.x,pos.y,pos.z,ChunkSizeX + 1,ChunkSizeY + 1,ChunkSizeZ + 1);
+
+
+    //size_t local_item_size = 33;
+
+
+    error = clEnqueueNDRangeKernel(queue, kernel.kernel, 3, nullptr, global_item_sizes, nullptr, 0, nullptr, nullptr);
+
+    voxels = (float *) malloc(sizeof(float) * SIZE);
+
+    error = clEnqueueReadBuffer(queue, voxels_mem_obj, CL_TRUE, 0, SIZE * sizeof(float), voxels, 0, nullptr, nullptr);
+
+    //std::cout << error << std::endl;
+
     float twotime = glfwGetTime();
+
+
     std::cout<< twotime - onetime << std::endl;
 
 
-
+    //voxels = C;
 
     VerticesTime = 0;
     
@@ -675,15 +678,17 @@ void MarchingCubes::processSection(int id, MCData data) {
 
                 float heightMod = -y1 + 5;
 
-                vals[0] = Circle(corners[0]) + voxels[(z1 * (ChunkSizeX + 1) * (ChunkSizeY + 1)) + (y1 * (ChunkSizeX + 1)) + x1];
-                vals[1] = Circle(corners[1]) + voxels[(z1 * (ChunkSizeX + 1) * (ChunkSizeY + 1)) + (y1 * (ChunkSizeX + 1)) + (x1 + 1)];
-                vals[2] = Circle(corners[2]) + voxels[(z1 * (ChunkSizeX + 1) * (ChunkSizeY + 1)) + ((y1 + 1) * (ChunkSizeX + 1)) + (x1 + 1)];
-                vals[3] = Circle(corners[3]) + voxels[(z1 * (ChunkSizeX + 1) * (ChunkSizeY + 1)) + ((y1 + 1) * (ChunkSizeX + 1)) + x1];
+                vals[0] = voxels[x1 + y1 * (ChunkSizeX + 1) + z1 * (ChunkSizeX + 1) * (ChunkSizeY + 1)];
+                vals[1] = voxels[(x1 + 1) + y1 * (ChunkSizeX + 1) + z1 * (ChunkSizeX + 1) * (ChunkSizeY + 1)];
+                vals[2] = voxels[(x1 + 1) + (y1 + 1) * (ChunkSizeX + 1) + z1 * (ChunkSizeX + 1) * (ChunkSizeY + 1)];
+                vals[3] = voxels[x1 + (y1 + 1) * (ChunkSizeX + 1) + z1 * (ChunkSizeX + 1) * (ChunkSizeY + 1)];
 
-                vals[4] = Circle(corners[4]) + voxels[((z1 + 1)* (ChunkSizeX + 1) * (ChunkSizeY + 1)) + (y1 * (ChunkSizeX + 1)) + x1];
-                vals[5] = Circle(corners[5]) + voxels[((z1 + 1) * (ChunkSizeX + 1) * (ChunkSizeY + 1)) + (y1 * (ChunkSizeX + 1)) + (x1 + 1)];
-                vals[6] = Circle(corners[6]) + voxels[((z1 + 1) * (ChunkSizeX + 1) * (ChunkSizeY + 1)) + ((y1 + 1) * (ChunkSizeX + 1)) + (x1 + 1)];
-                vals[7] = Circle(corners[7]) + voxels[((z1 + 1) * (ChunkSizeX + 1) * (ChunkSizeY + 1)) + ((y1 + 1) * (ChunkSizeX + 1)) + x1];
+                vals[4] = voxels[x1 + y1 * (ChunkSizeX + 1) + (z1 + 1) * (ChunkSizeX + 1) * (ChunkSizeY + 1)];
+                vals[5] = voxels[(x1 + 1) + y1 * (ChunkSizeX + 1) + (z1 + 1) * (ChunkSizeX + 1) * (ChunkSizeY + 1)];
+                vals[6] = voxels[(x1 + 1) + (y1 + 1) * (ChunkSizeX + 1) +
+                                 (z1 + 1) * (ChunkSizeX + 1) * (ChunkSizeY + 1)];
+                vals[7] = voxels[x1 + (y1 + 1) * (ChunkSizeX + 1) + (z1 + 1) * (ChunkSizeX + 1) * (ChunkSizeY + 1)];
+
 
 
                 float firsttime = glfwGetTime();

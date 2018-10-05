@@ -64,7 +64,8 @@ public:
     float smin(float a, float b, float k);
     
     float* voxels;
-    
+    float *C;
+
     void processSection(int id, MCData data);
     
     void UpdateMesh();
