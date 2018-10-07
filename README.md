@@ -10,3 +10,8 @@ However, we are far, far, far from being finished. So, here are a few things tha
 
 ALREADY DONE:
 - Offloading noise generation and planet generation to the GPU using OpenCL (For huge speedups) 
+
+Some really nice things to have but are not required at this point or would require a rewrite:
+
+- DUAL CONTOURING -- this should probably be moved to the HIGHLY Important list, but I dont understand it well enough to even attempt to do it
+- OCTREE SYSTEM -- Goes with the Dual Contouring, would be extremely nice to have some sort of generic class that we can call to to use for textures, DC, and n-body physics optimization. 
