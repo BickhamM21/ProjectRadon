@@ -101,7 +101,7 @@ inline float simplex3d_fractal(float3 m) {
 
     return circle;*/
 
-void kernel SimplexNoise(global float* voxels, global const float* settings) {
+void kernel SimplexNoise(global float* voxels, global const float* settings, global float3* norms) {
 
 
     int x = get_global_id(0);

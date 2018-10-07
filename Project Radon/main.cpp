@@ -17,8 +17,7 @@
 #include "MarchingCubes.hpp"
 #include "Camera.hpp"
 #include "Light.hpp"
-#include <OpenCL/cl.h>
-#include <boost/thread.hpp>
+
 #include "CLKernel.h"
 
 
@@ -49,7 +48,7 @@ int main(int argc, const char * argv[]) {
 
     CLKernel CLK("SimplexNoise.cl");
 
-    MarchingCubes *m = new MarchingCubes(64, 64, 64, 1, 0.0f, 8, glm::vec3(0, 0, 0), CLK);
+    MarchingCubes *m = new MarchingCubes(128, 128, 128, 0.5f, 0.0f, 8, glm::vec3(-0, -0, -0), CLK);
 
 
     VAO vao;
@@ -90,7 +89,9 @@ int main(int argc, const char * argv[]) {
 
 
     while(!glfwWindowShouldClose(window.GetWindow())) {
+
         float firsttime = glfwGetTime();
+
 
         glfwSwapBuffers(window.GetWindow()); //swap the buffer in the GPU memory, this is needed
 
@@ -107,16 +108,17 @@ int main(int argc, const char * argv[]) {
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear the screen for a new drawing
         //m->pos = glm::vec3(glfwGetTime(),0,0);
+
         //m->UpdateMesh(); //update things like the shader attached to the mesh, also, draw the mesh
 
 
 
 
-        /*mesh.SetVBOData(&m->vertices[0], GL_DYNAMIC_DRAW,
-                        m->vertices.size() * sizeof(glm::vec3));
-        mesh.SetNormalVBOData(&m->normals[0], GL_DYNAMIC_DRAW,
-                              m->normals.size() * sizeof(glm::vec3));
-        mesh.SetEBOData(&m->indices[0], GL_DYNAMIC_DRAW, m->indices.size() * sizeof(int)); *///set the indices data
+        //mesh.SetVBOData(&m->vertices[0], GL_DYNAMIC_DRAW,
+                        //m->vertices.size() * sizeof(glm::vec3));
+        //mesh.SetNormalVBOData(&m->normals[0], GL_DYNAMIC_DRAW,
+                              //m->normals.size() * sizeof(glm::vec3));
+        //mesh.SetEBOData(&m->indices[0], GL_DYNAMIC_DRAW, m->indices.size() * sizeof(int)); //set the indices data
 
 
         if(m->vertices.size() != 0) {
@@ -130,7 +132,7 @@ int main(int argc, const char * argv[]) {
 
         float secondtime = glfwGetTime();
 
-        //std::cout << 1000 * (secondtime - firsttime) << std::endl;
+        std::cout <<  (secondtime - firsttime) << std::endl;
     }
 
     glfwDestroyWindow(window.GetWindow()); //Destroy the Window since the application was closed

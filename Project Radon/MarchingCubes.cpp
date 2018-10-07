@@ -11,8 +11,14 @@
 #include <GLFW/glfw3.h>
 #include <boost/thread.hpp>
 #include <ctpl.h>
-#include <FastNoiseSIMD.h>
-#include <OpenCL/cl.h>
+
+
+#ifdef __APPLE__
+#include <OpenCL/opencl.h>
+#else
+#include <CL/cl.h>
+#endif
+
 
 
 MarchingCubes::MarchingCubes(int chunkSizeX, int chunkSizeY, int chunkSizeZ, float gridSize, float isoValue,
@@ -42,11 +48,14 @@ MarchingCubes::MarchingCubes(int chunkSizeX, int chunkSizeY, int chunkSizeZ, flo
 
     cl_mem voxels_mem_obj = clCreateBuffer(kernel.context, CL_MEM_READ_WRITE, SIZE * sizeof(float), NULL, &error);
     cl_mem settings_mem_obj = clCreateBuffer(kernel.context, CL_MEM_READ_ONLY, 7 * sizeof(float), NULL, &error);
+    cl_mem norms_mem_obj = clCreateBuffer(kernel.context, CL_MEM_READ_WRITE, SIZE * sizeof(glm::vec3), NULL, &error);
+
 
     error = clEnqueueWriteBuffer(queue, settings_mem_obj, CL_TRUE, 0, 7 * sizeof(float), settings, 0, NULL, NULL);
 
     error = clSetKernelArg(kernel.kernel, 0, sizeof(cl_mem), (void *) &voxels_mem_obj);
     error = clSetKernelArg(kernel.kernel, 1, sizeof(cl_mem), (void *) &settings_mem_obj);
+    error = clSetKernelArg(kernel.kernel, 2, sizeof(cl_mem), (void *) &norms_mem_obj);
 
     size_t global_item_sizes[3];
     global_item_sizes[0] = ChunkSizeX + 1;

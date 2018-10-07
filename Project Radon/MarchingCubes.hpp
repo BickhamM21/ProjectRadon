@@ -64,7 +64,7 @@ public:
     float smin(float a, float b, float k);
     
     float* voxels;
-    float *C;
+    glm::vec3* norms;
 
     void processSection(int id, MCData data);
     

@@ -3,7 +3,11 @@
 //
 
 #include "CLKernel.h"
-#include <OpenCL/cl.h>
+#ifdef __APPLE__
+#include <OpenCL/opencl.h>
+#else
+#include <CL/cl.h>
+#endif
 #include <vector>
 #include <iostream>
 #include <string>
