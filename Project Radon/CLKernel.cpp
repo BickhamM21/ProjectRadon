@@ -14,8 +14,7 @@
 #include <fstream>
 
 
-
-CLKernel::CLKernel(std::string FilePath) {
+CLKernel::CLKernel(char *FilePath, char *Kernel) {
 
     int error;
 
@@ -37,7 +36,7 @@ CLKernel::CLKernel(std::string FilePath) {
     char *source_str;
     size_t source_size;
 
-    file = fopen("SimplexNoise.cl", "r");
+    file = fopen(FilePath, "r");
 
     source_str = (char *) malloc(0x100000);
     source_size = fread(source_str, 1, 0x100000, file);
@@ -47,7 +46,7 @@ CLKernel::CLKernel(std::string FilePath) {
     program = clCreateProgramWithSource(context, 1, (const char **) &source_str, (const size_t *) &source_size, &error);
     error = clBuildProgram(program, 1, &device_id, NULL, NULL, NULL);
 
-    kernel = clCreateKernel(program, "SimplexNoise", &error);
+    kernel = clCreateKernel(program, Kernel, &error);
 
     std::cout << error << std::endl;
 

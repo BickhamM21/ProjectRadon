@@ -17,7 +17,7 @@ class CLKernel {
 
 public:
 
-    CLKernel(std::string FilePath);
+    CLKernel(char *FilePath, char *Kernel);
 
     cl_context context;
     cl_program program;

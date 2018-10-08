@@ -46,9 +46,11 @@ int main(int argc, const char * argv[]) {
     //Create the camera object
     Camera c;
 
-    CLKernel CLK("SimplexNoise.cl");
+    CLKernel CLK("SimplexNoise.cl", "SimplexNoise");
+    CLKernel CLKN("NoiseNormals.cl", "NoiseNormals");
 
-    MarchingCubes *m = new MarchingCubes(128, 128, 128, 0.5f, 0.0f, 8, glm::vec3(-0, -0, -0), CLK);
+
+    MarchingCubes *m = new MarchingCubes(32, 32, 32, 2.0f, 0.0f, 8, glm::vec3(-0, -0, -0), CLK, CLKN);
 
 
     VAO vao;

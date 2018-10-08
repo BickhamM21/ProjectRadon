@@ -22,9 +22,9 @@
 
 
 MarchingCubes::MarchingCubes(int chunkSizeX, int chunkSizeY, int chunkSizeZ, float gridSize, float isoValue,
-                             int numThreads, glm::vec3 pos, CLKernel Kernel)
+                             int numThreads, glm::vec3 pos, CLKernel Kernel, CLKernel KernelN)
         : ChunkSizeX(chunkSizeX), ChunkSizeY(chunkSizeY), ChunkSizeZ(chunkSizeZ), GridSize(gridSize),
-          IsoValue(isoValue), pos(pos), kernel(Kernel) {
+          IsoValue(isoValue), pos(pos), kernel(Kernel), kernelN(KernelN) {
     float onetime = glfwGetTime();
 
     int error;
@@ -48,14 +48,12 @@ MarchingCubes::MarchingCubes(int chunkSizeX, int chunkSizeY, int chunkSizeZ, flo
 
     cl_mem voxels_mem_obj = clCreateBuffer(kernel.context, CL_MEM_READ_WRITE, SIZE * sizeof(float), NULL, &error);
     cl_mem settings_mem_obj = clCreateBuffer(kernel.context, CL_MEM_READ_ONLY, 7 * sizeof(float), NULL, &error);
-    cl_mem norms_mem_obj = clCreateBuffer(kernel.context, CL_MEM_READ_WRITE, SIZE * sizeof(glm::vec3), NULL, &error);
 
 
     error = clEnqueueWriteBuffer(queue, settings_mem_obj, CL_TRUE, 0, 7 * sizeof(float), settings, 0, NULL, NULL);
 
     error = clSetKernelArg(kernel.kernel, 0, sizeof(cl_mem), (void *) &voxels_mem_obj);
     error = clSetKernelArg(kernel.kernel, 1, sizeof(cl_mem), (void *) &settings_mem_obj);
-    error = clSetKernelArg(kernel.kernel, 2, sizeof(cl_mem), (void *) &norms_mem_obj);
 
     size_t global_item_sizes[3];
     global_item_sizes[0] = ChunkSizeX + 1;
@@ -63,25 +61,41 @@ MarchingCubes::MarchingCubes(int chunkSizeX, int chunkSizeY, int chunkSizeZ, flo
     global_item_sizes[2] = ChunkSizeZ + 1;
 
 
-
-
-
-
-    //size_t local_item_size = 33;
-
-
     error = clEnqueueNDRangeKernel(queue, kernel.kernel, 3, nullptr, global_item_sizes, nullptr, 0, nullptr, nullptr);
 
     voxels = (float *) malloc(sizeof(float) * SIZE);
+    norms = (glm::vec3 *) malloc(sizeof(glm::vec3) * SIZE);
+
+
 
     error = clEnqueueReadBuffer(queue, voxels_mem_obj, CL_TRUE, 0, SIZE * sizeof(float), voxels, 0, nullptr, nullptr);
 
-    //std::cout << error << std::endl;
 
-    float twotime = glfwGetTime();
+    clReleaseKernel(kernel.kernel);
+    clReleaseContext(kernel.context);
+
+    queue = clCreateCommandQueue(kernelN.context, kernelN.device_id, 0, &error);
 
 
-    std::cout<< twotime - onetime << std::endl;
+    cl_mem norms_mem_obj = clCreateBuffer(kernelN.context, CL_MEM_READ_WRITE, SIZE * sizeof(glm::vec3), NULL, &error);
+
+    voxels_mem_obj = clCreateBuffer(kernelN.context, CL_MEM_READ_WRITE, SIZE * sizeof(float), NULL, &error);
+    clEnqueueWriteBuffer(queue, voxels_mem_obj, CL_TRUE, 0, SIZE * sizeof(float), voxels, 0, NULL, NULL);
+
+
+    settings_mem_obj = clCreateBuffer(kernelN.context, CL_MEM_READ_WRITE, 7 * sizeof(float), NULL, &error);
+    clEnqueueWriteBuffer(queue, settings_mem_obj, CL_TRUE, 0, 7 * sizeof(float), settings, 0, NULL, NULL);
+
+
+    error = clSetKernelArg(kernelN.kernel, 0, sizeof(cl_mem), (void *) &voxels_mem_obj);
+    error = clSetKernelArg(kernelN.kernel, 1, sizeof(cl_mem), (void *) &settings_mem_obj);
+    error = clSetKernelArg(kernelN.kernel, 2, sizeof(cl_mem), (void *) &norms_mem_obj);
+
+    error = clEnqueueNDRangeKernel(queue, kernelN.kernel, 3, nullptr, global_item_sizes, nullptr, 0, nullptr, nullptr);
+
+    error = clEnqueueReadBuffer(queue, norms_mem_obj, CL_TRUE, 0, SIZE * sizeof(glm::vec3), norms, 0, nullptr, nullptr);
+
+
 
 
     //voxels = C;
@@ -821,6 +835,7 @@ void MarchingCubes::processSection(int id, MCData data) {
                     data.Normals.push_back(-NormalCalc(vertlist[triTable[cubeIndex][i + 1]]));
                     data.Normals.push_back(-NormalCalc(vertlist[triTable[cubeIndex][i + 0]]));
 
+                    //data.Normals.push_back(norms[x1]);
                     
                     //Vertices.push_back(vertlist[triTable[cubeIndex][i + 2]]);
                     

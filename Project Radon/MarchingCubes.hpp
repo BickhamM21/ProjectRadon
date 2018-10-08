@@ -49,7 +49,7 @@ public:
 
 
     MarchingCubes(int chunkSizeX, int chunkSize, int chunkSizeZ, float gridSize, float isoValue, int numThreads,
-                  glm::vec3 pos, CLKernel Kernel);
+                  glm::vec3 pos, CLKernel Kernel, CLKernel KernelN);
     std::vector<glm::vec3> vertices;
     std::vector<int> indices;
     std::vector<glm::vec3> normals;
@@ -77,6 +77,7 @@ public:
 
 
     CLKernel kernel;
+    CLKernel kernelN;
 
 private:
     
